@@ -32,7 +32,7 @@ public class StudentPerformanceDriver {
     job1.setJarByClass(StudentPerformanceDriver.class);
     job1.setMapperClass(GPAClassMapper.class);
     job1.setReducerClass(GPAClassReducer.class);
-    job1.setNumReduceTasks(1); // Ensure single reducer for formatted output
+    job1.setNumReduceTasks(1);
 
     job1.setOutputKeyClass(Text.class);
     job1.setOutputValueClass(Text.class);
@@ -41,7 +41,7 @@ public class StudentPerformanceDriver {
     FileOutputFormat.setOutputPath(job1, new Path(outputBase + "/table/job1_GenderSchoolType_GPAClass"));
 
     if (!job1.waitForCompletion(true)) {
-      System.exit(1); // Stop if job1 fails
+      System.exit(1);
     }
 
     Configuration conf2 = new Configuration();
@@ -50,7 +50,7 @@ public class StudentPerformanceDriver {
     job2.setJarByClass(StudentPerformanceDriver.class);
     job2.setMapperClass(InternetAccessMapper.class);
     job2.setReducerClass(InternetAccessReducer.class);
-    job2.setNumReduceTasks(1); // Ensure single reducer for formatted output
+    job2.setNumReduceTasks(1);
 
     job2.setOutputKeyClass(Text.class);
     job2.setOutputValueClass(Text.class);
@@ -59,7 +59,7 @@ public class StudentPerformanceDriver {
     FileOutputFormat.setOutputPath(job2, new Path(outputBase + "/table/job2_SchoolTypeLocale_InternetAccess"));
 
     if (!job2.waitForCompletion(true)) {
-      System.exit(1); // Stop if job2 fails
+      System.exit(1);
     }
 
     Configuration conf3 = new Configuration();
@@ -98,7 +98,6 @@ public class StudentPerformanceDriver {
       System.exit(1);
     }
 
-    // All jobs succeeded
     System.exit(0);
   }
 }

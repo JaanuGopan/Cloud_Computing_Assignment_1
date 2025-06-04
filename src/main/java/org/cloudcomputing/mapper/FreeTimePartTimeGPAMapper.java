@@ -12,20 +12,18 @@ public class FreeTimePartTimeGPAMapper extends Mapper<LongWritable, Text, Text, 
 
   public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     String[] fields = value.toString().split(",");
-    if (fields[0].equals("Age")) return; // Skip header
+    // Skip header
+    if (fields[0].equals("Age")) return;
 
     try {
-      int freeTime = Integer.parseInt(fields[19]);  // Column 19: FreeTime (1 to 5)
-      String partTimeJobRaw = fields[16];           // Column 17: PartTimeJob (Yes/No)
-      double gpa = Double.parseDouble(fields[11]);  // Column 12: GPA
+      int freeTime = Integer.parseInt(fields[19]);
+      String partTimeJobRaw = fields[16];
+      double gpa = Double.parseDouble(fields[11]);
 
-      // Category: FreeTime
       String freeTimeCategory = (freeTime <= 2) ? "LowFreeTime" : "HighFreeTime";
 
-      // Category: PartTimeJob
       String partTimeJob = partTimeJobRaw.equalsIgnoreCase("1") ? "WithPartTimeJob" : "NoPartTimeJob";
 
-      // Category: GPA
       String gpaCategory;
       if (gpa > 3.7) {
         gpaCategory = "FirstClass";
@@ -37,11 +35,8 @@ public class FreeTimePartTimeGPAMapper extends Mapper<LongWritable, Text, Text, 
         gpaCategory = "Normal";
       }
 
-      // Key Format: FreeTime_PartTimeJob_GPAClass
       outputKey.set(freeTimeCategory + "_" + partTimeJob + "_" + gpaCategory);
       context.write(outputKey, one);
-    } catch (Exception e) {
-      // Ignore invalid records
-    }
+    } catch (Exception ignored) {}
   }
 }

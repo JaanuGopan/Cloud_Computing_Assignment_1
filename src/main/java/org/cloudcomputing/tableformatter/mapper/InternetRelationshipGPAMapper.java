@@ -12,12 +12,12 @@ public class InternetRelationshipGPAMapper extends Mapper<LongWritable, Text, Te
 
   public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     String[] fields = value.toString().split(",");
-    if (fields[0].equals("Age")) return; // Skip header
+    if (fields[0].equals("Age")) return;
 
     try {
-      String internetRaw = fields[14];       // Column 19: InternetAccess (Yes/No)
-      String relationshipRaw = fields[18];   // Column 20: RelationshipStatus (Yes/No)
-      double gpa = Double.parseDouble(fields[11]); // Column 12: GPA
+      String internetRaw = fields[14];
+      String relationshipRaw = fields[18];
+      double gpa = Double.parseDouble(fields[11]);
 
       String internetAccess = internetRaw.equalsIgnoreCase("1") ? "InternetAccess" : "NoInternetAccess";
       String relationship = relationshipRaw.equalsIgnoreCase("1") ? "InRelationship" : "NoRelationship";
@@ -36,8 +36,6 @@ public class InternetRelationshipGPAMapper extends Mapper<LongWritable, Text, Te
       outputKey.set(internetAccess + "_" + relationship + "_" + gpaCategory);
       context.write(outputKey, one);
 
-    } catch (Exception e) {
-      // Ignore parsing errors
-    }
+    } catch (Exception ignored) {}
   }
 }

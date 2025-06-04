@@ -21,7 +21,7 @@ public class StudentPerformanceMain {
         Path inputPath = new Path(args[0]);
         String outputBase = args[1];
 
-        // ✅ Job 1: GPA Class Distribution by Gender and SchoolType
+        // Job 1: GPA Class Distribution by Gender and SchoolType
         Configuration conf1 = new Configuration();
         Job job1 = Job.getInstance(conf1, "GPA Class Distribution by Gender and SchoolType");
 
@@ -37,7 +37,7 @@ public class StudentPerformanceMain {
 
         if (!job1.waitForCompletion(true)) System.exit(1);
 
-        // ✅ Job 2: Internet Access Count by SchoolType and Locale
+        // Job 2: Internet Access Count by SchoolType and Locale
         Configuration conf2 = new Configuration();
         Job job2 = Job.getInstance(conf2, "Internet Access by SchoolType and Locale");
 
@@ -54,7 +54,7 @@ public class StudentPerformanceMain {
         if (!job2.waitForCompletion(true)) System.exit(1);
 
 
-        // ✅ Job 3: GPA Class by FreeTime and PartTimeJob
+        // Job 3: GPA Class by FreeTime and PartTimeJob
         Configuration conf3 = new Configuration();
         Job job3 = Job.getInstance(conf3, "GPA Class by FreeTime and PartTimeJob");
 
@@ -71,7 +71,7 @@ public class StudentPerformanceMain {
         if (!job3.waitForCompletion(true)) System.exit(1);
 
 
-        // ✅ Job 4: GPA Class by Internet Access and Relationship
+        // Job 4: GPA Class by Internet Access and Relationship
         Configuration conf4 = new Configuration();
         Job job4 = Job.getInstance(conf4, "GPA Class by Internet Access and Relationship");
 

@@ -24,10 +24,8 @@ public class InternetRelationshipGPAReducer extends Reducer<Text, Text, Text, Te
                 sum += Integer.parseInt(val.toString());
             }
 
-            // Initialize row if not already present
             resultMap.putIfAbsent(combinedLabel, new String[]{"0", "0", "0", "0"});
 
-            // Update corresponding GPA class count
             switch (gpaClass) {
                 case "FirstClass":
                     resultMap.get(combinedLabel)[0] = String.valueOf(sum);

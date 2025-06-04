@@ -17,18 +17,16 @@ public class GPAClassReducer extends Reducer<Text, Text, Text, Text> {
             String[] parts = key.toString().split("_");
             if (parts.length != 3) return;
 
-            String genderSchool = parts[0] + "_" + parts[1];  // e.g., Male_Private
-            String gpaClass = parts[2];                       // e.g., FirstClass
+            String genderSchool = parts[0] + "_" + parts[1];
+            String gpaClass = parts[2];
 
             int sum = 0;
             for (Text val : values) {
                 sum += Integer.parseInt(val.toString());
             }
 
-            // Initialize row if not already present
             resultMap.putIfAbsent(genderSchool, new String[]{"0", "0", "0", "0"});
 
-            // Update corresponding GPA class count
             switch (gpaClass) {
                 case "FirstClass":
                     resultMap.get(genderSchool)[0] = String.valueOf(sum);

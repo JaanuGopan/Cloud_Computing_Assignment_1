@@ -15,9 +15,9 @@ public class GPAClassMapper extends Mapper<LongWritable, Text, Text, Text> {
         if (fields.length < 12 || fields[0].equalsIgnoreCase("Age")) return;
 
         try {
-            String gender = fields[2].trim();      // Column 3
-            String schoolType = fields[6].trim();  // Column 7
-            double gpa = Double.parseDouble(fields[11].trim()); // Column 12
+            String gender = fields[2].trim();
+            String schoolType = fields[6].trim();
+            double gpa = Double.parseDouble(fields[11].trim());
 
             String gpaClass;
             if (gpa > 3.7)
@@ -29,7 +29,6 @@ public class GPAClassMapper extends Mapper<LongWritable, Text, Text, Text> {
             else
                 gpaClass = "Normal";
 
-            // Output key: Gender_SchoolType_GPAClass
             keyOut.set(gender + "_" + schoolType + "_" + gpaClass);
             context.write(keyOut, one);
         } catch (Exception ignored) {}

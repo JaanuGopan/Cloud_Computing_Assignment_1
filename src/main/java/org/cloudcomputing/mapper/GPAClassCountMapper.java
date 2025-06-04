@@ -7,7 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class GPAClassCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
-    private Text keyOut = new Text();
+    private final Text keyOut = new Text();
     private static final IntWritable one = new IntWritable(1);
 
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -15,9 +15,9 @@ public class GPAClassCountMapper extends Mapper<LongWritable, Text, Text, IntWri
         if (fields[0].equals("Age")) return;
 
         try {
-            String gender = fields[2];      // Column 3
-            String schoolType = fields[6];  // Column 7
-            double gpa = Double.parseDouble(fields[11]); // Column 12
+            String gender = fields[2];
+            String schoolType = fields[6];
+            double gpa = Double.parseDouble(fields[11]);
 
             String gpaClass;
             if (gpa > 3.7)
@@ -29,8 +29,8 @@ public class GPAClassCountMapper extends Mapper<LongWritable, Text, Text, IntWri
             else
                 gpaClass = "Normal";
 
-            keyOut.set(gender + "_" + schoolType + "_" + gpaClass); // e.g., Female_Private_FirstClass
+            keyOut.set(gender + "_" + schoolType + "_" + gpaClass);
             context.write(keyOut, one);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 }

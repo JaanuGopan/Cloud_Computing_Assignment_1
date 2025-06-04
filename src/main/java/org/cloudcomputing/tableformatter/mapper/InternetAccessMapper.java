@@ -16,9 +16,9 @@ public class InternetAccessMapper extends Mapper<LongWritable, Text, Text, Text>
     if (fields[0].equals("Age")) return;
 
     try {
-      String schoolType = fields[6];   // Column 7: SchoolType
-      String locale = fields[7];       // Column 8: Locale
-      String internet = fields[14];    // Column 14: InternetAccess (Yes/No)
+      String schoolType = fields[6];
+      String locale = fields[7];
+      String internet = fields[14];
 
       String combinedKey = schoolType + "_" + locale;
       String accessType = internet.equalsIgnoreCase("1") ? "InternetAccess" : "NoAccess";

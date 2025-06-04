@@ -12,19 +12,17 @@ public class InternetAccessMapper extends Mapper<LongWritable, Text, Text, IntWr
 
   public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     String[] fields = value.toString().split(",");
-    if (fields[0].equals("Age")) return; // Skip header
+    if (fields[0].equals("Age")) return;
 
     try {
-      String schoolType = fields[6];   // Column 7: SchoolType
-      String locale = fields[7];       // Column 8: Locale
-      String internet = fields[14];    // Column 14: InternetAccess (Yes/No)
+      String schoolType = fields[6];
+      String locale = fields[7];
+      String internet = fields[14];
 
       String access = internet.equalsIgnoreCase("1") ? "InternetAccess" : "NoAccess";
-      keyOut.set(schoolType + "_" + locale + "_" + access); // e.g., Public_City_InternetAccess
+      keyOut.set(schoolType + "_" + locale + "_" + access);
 
-      context.write(keyOut, one); // Emit key with count 1
-    } catch (Exception e) {
-      // Skip malformed lines
-    }
+      context.write(keyOut, one);
+    } catch (Exception ignored) {}
   }
 }
