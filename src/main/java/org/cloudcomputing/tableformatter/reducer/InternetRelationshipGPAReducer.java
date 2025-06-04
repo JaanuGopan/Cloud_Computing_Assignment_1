@@ -1,4 +1,4 @@
-package org.cloudcomputing.reducer;
+package org.cloudcomputing.tableformatter.reducer;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FreeTimePartTimeGPAReducer extends Reducer<Text, Text, Text, Text>  {
+public class InternetRelationshipGPAReducer extends Reducer<Text, Text, Text, Text>  {
     private final Map<String, String[]> resultMap = new LinkedHashMap<>();
 
     @Override
@@ -16,8 +16,8 @@ public class FreeTimePartTimeGPAReducer extends Reducer<Text, Text, Text, Text> 
             String[] parts = key.toString().split("_");
             if (parts.length != 3) return;
 
-            String combinedLabel = parts[0] + "_" + parts[1];  // e.g., Male_Private
-            String gpaClass = parts[2];                       // e.g., FirstClass
+            String combinedLabel = parts[0] + "_" + parts[1];
+            String gpaClass = parts[2];
 
             int sum = 0;
             for (Text val : values) {
@@ -47,18 +47,18 @@ public class FreeTimePartTimeGPAReducer extends Reducer<Text, Text, Text, Text> 
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        context.write(new Text("|--------------------------------+------------+--------------+--------------+----------|"), null);
+        context.write(new Text("|-----------------------------------+------------+--------------+--------------+----------|"), null);
         // Header
-        context.write(new Text(String.format("| %-30s | %10s | %12s | %12s | %8s |",
+        context.write(new Text(String.format("| %-33s | %10s | %12s | %12s | %8s |",
                         "Combined Feature Labels", "FirstClass", "SecondUpper", "SecondLower", "Normal")),
                 null);
-        context.write(new Text("|--------------------------------+------------+--------------+--------------+----------|"), null);
+        context.write(new Text("|-----------------------------------+------------+--------------+--------------+----------|"), null);
 
         // Rows
         for (Map.Entry<String, String[]> entry : resultMap.entrySet()) {
             String label = entry.getKey();
             String[] counts = entry.getValue();
-            context.write(new Text(String.format("| %-30s | %10s | %12s | %12s | %8s |",
+            context.write(new Text(String.format("| %-33s | %10s | %12s | %12s | %8s |",
                     label,
                     String.format("%,d", Integer.parseInt(counts[0])),
                     String.format("%,d", Integer.parseInt(counts[1])),
@@ -67,6 +67,6 @@ public class FreeTimePartTimeGPAReducer extends Reducer<Text, Text, Text, Text> 
             )), null);
         }
 
-        context.write(new Text("|--------------------------------+------------+--------------+--------------+----------|"), null);
+        context.write(new Text("|-----------------------------------+------------+--------------+--------------+----------|"), null);
     }
 }

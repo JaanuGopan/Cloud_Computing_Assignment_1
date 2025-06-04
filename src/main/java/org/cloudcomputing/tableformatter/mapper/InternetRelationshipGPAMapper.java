@@ -1,14 +1,14 @@
-package org.cloudcomputing.mapper;
+package org.cloudcomputing.tableformatter.mapper;
 
-import java.io.IOException;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class InternetRelationshipGPAMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+import java.io.IOException;
+
+public class InternetRelationshipGPAMapper extends Mapper<LongWritable, Text, Text, Text> {
   private final Text outputKey = new Text();
-  private final static IntWritable one = new IntWritable(1);
+  private final static Text one = new Text("1");
 
   public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     String[] fields = value.toString().split(",");

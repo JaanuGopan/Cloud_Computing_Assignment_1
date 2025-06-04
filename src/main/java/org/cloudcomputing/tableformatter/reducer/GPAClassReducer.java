@@ -1,4 +1,4 @@
-package org.cloudcomputing.reducer;
+package org.cloudcomputing.tableformatter.reducer;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;

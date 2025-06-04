@@ -1,4 +1,4 @@
-package org.cloudcomputing.mapper;
+package org.cloudcomputing.tableformatter.mapper;
 
 import java.io.IOException;
 import org.apache.hadoop.io.Text;

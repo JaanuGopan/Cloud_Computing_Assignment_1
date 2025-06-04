@@ -6,14 +6,14 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.cloudcomputing.mapper.FreeTimePartTimeGPAMapper;
-import org.cloudcomputing.mapper.GPAClassMapper;
-import org.cloudcomputing.mapper.InternetAccessMapper;
-import org.cloudcomputing.mapper.InternetRelationshipGPAMapper;
-import org.cloudcomputing.reducer.FreeTimePartTimeGPAReducer;
-import org.cloudcomputing.reducer.GPAClassReducer;
-import org.cloudcomputing.reducer.InternetAccessReducer;
-import org.cloudcomputing.reducer.InternetRelationshipGPAReducer;
+import org.cloudcomputing.tableformatter.mapper.FreeTimePartTimeGPAMapper;
+import org.cloudcomputing.tableformatter.mapper.GPAClassMapper;
+import org.cloudcomputing.tableformatter.mapper.InternetAccessMapper;
+import org.cloudcomputing.tableformatter.mapper.InternetRelationshipGPAMapper;
+import org.cloudcomputing.tableformatter.reducer.FreeTimePartTimeGPAReducer;
+import org.cloudcomputing.tableformatter.reducer.GPAClassReducer;
+import org.cloudcomputing.tableformatter.reducer.InternetAccessReducer;
+import org.cloudcomputing.tableformatter.reducer.InternetRelationshipGPAReducer;
 
 public class StudentPerformanceDriver {
 
@@ -38,7 +38,7 @@ public class StudentPerformanceDriver {
     job1.setOutputValueClass(Text.class);
 
     FileInputFormat.addInputPath(job1, inputPath);
-    FileOutputFormat.setOutputPath(job1, new Path(outputBase + "/job1_GenderSchoolType_GPAClass"));
+    FileOutputFormat.setOutputPath(job1, new Path(outputBase + "/table/job1_GenderSchoolType_GPAClass"));
 
     if (!job1.waitForCompletion(true)) {
       System.exit(1); // Stop if job1 fails
@@ -56,7 +56,7 @@ public class StudentPerformanceDriver {
     job2.setOutputValueClass(Text.class);
 
     FileInputFormat.addInputPath(job2, inputPath);
-    FileOutputFormat.setOutputPath(job2, new Path(outputBase + "/job2_SchoolTypeLocale_InternetAccess"));
+    FileOutputFormat.setOutputPath(job2, new Path(outputBase + "/table/job2_SchoolTypeLocale_InternetAccess"));
 
     if (!job2.waitForCompletion(true)) {
       System.exit(1); // Stop if job2 fails
@@ -74,7 +74,7 @@ public class StudentPerformanceDriver {
     job3.setOutputValueClass(Text.class);
 
     FileInputFormat.addInputPath(job3, inputPath);
-    FileOutputFormat.setOutputPath(job3, new Path(outputBase + "/job3_FreeTimePartTime_Pivot"));
+    FileOutputFormat.setOutputPath(job3, new Path(outputBase + "/table/job3_FreeTimePartTime_Pivot"));
 
     if (!job3.waitForCompletion(true)) {
       System.exit(1);
@@ -92,7 +92,7 @@ public class StudentPerformanceDriver {
     job4.setOutputValueClass(Text.class);
 
     FileInputFormat.addInputPath(job4, inputPath);
-    FileOutputFormat.setOutputPath(job4, new Path(outputBase + "/job4_InternetRelationship_GPAClass"));
+    FileOutputFormat.setOutputPath(job4, new Path(outputBase + "/table/job4_InternetRelationship_GPAClass"));
 
     if (!job4.waitForCompletion(true)) {
       System.exit(1);
