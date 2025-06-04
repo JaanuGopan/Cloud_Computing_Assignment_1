@@ -1,4 +1,0 @@
-Hadoop is an open-source framework.
-Hadoop is used for distributed storage and processing.
-MapReduce is a programming model in Hadoop.
-Big Data is processed using Hadoop and MapReduce.
