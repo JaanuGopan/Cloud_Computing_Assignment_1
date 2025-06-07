@@ -64,8 +64,8 @@ This project analyzes student performance data using Hadoop MapReduce. Outputs a
 Download the **test** "Student Performance" dataset from Kaggle and place it in your `~/Downloads/Dataset/` directory as `test.csv` and rename it as student_data.csv.
 https://www.kaggle.com/datasets/neuralsorcerer/student-performance
 ```
-~/downloads/
-└── Dasets/
+~/Downloads/
+└── Datasets/
     ├── test.csv -> rename it as student_data.csv
 ```
 ---
