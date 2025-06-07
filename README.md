@@ -65,7 +65,7 @@ Download the **test** "Student Performance" dataset from Kaggle and place it in 
 https://www.kaggle.com/datasets/neuralsorcerer/student-performance
 ```
 ~/Downloads/
-└── Datasets/
+└── Dataset/
     ├── test.csv -> rename it as student_data.csv
 ```
 ---
