@@ -59,7 +59,18 @@ This project analyzes student performance data using Hadoop MapReduce. Outputs a
 
 ---
 
-## 🚀 Step 2: Clone the Repository
+## 🗃️ Step 2: Dataset
+
+Download the **test** "Student Performance" dataset from Kaggle and place it in your `~/Downloads/Dataset/` directory as `test.csv` and rename it as student_data.csv.
+https://www.kaggle.com/datasets/neuralsorcerer/student-performance
+```
+~/downloads/
+└── Dasets/
+    ├── test.csv -> rename is as student_data.csv
+```
+---
+
+## 🚀 Step 3: Clone the Repository
 
 ```bash
 git clone https://github.com/JaanuGopan/Cloud_Computing_Assignment_1.git
@@ -68,7 +79,7 @@ cd Cloud_Computing_Assignment_1
 
 ---
 
-## ⚙️ Step 3: Build with Maven
+## ⚙️ Step 4: Build with Maven
 
 ```bash
 mvn clean package
@@ -78,7 +89,7 @@ mvn clean package
 
 ---
 
-## 📁 Step 4: Copy Files to Docker
+## 📁 Step 5: Copy Files to Docker
 
 ### Copy JAR to `namenode`:
 ```bash
@@ -92,7 +103,7 @@ docker cp ~/Downloads/Dataset/student_data.csv namenode:/assignment/input/studen
 
 ---
 
-## 🛠️ Step 5: HDFS Setup
+## 🛠️ Step 6: HDFS Setup
 
 ### Access the container:
 ```bash
@@ -108,16 +119,16 @@ hdfs dfs -put /assignment/input/student_data.csv /assignment/input/
 
 ---
 
-## 🏃 Step 6: Run MapReduce Jobs
+## 🏃 Step 7: Run MapReduce Jobs
 
 ### Run Normal Output Jobs:
 ```bash
-hadoop jar /assignment/CloudComputingAssignment-1.0-SNAPSHOT.jar org.cloudcomputing.StudentPerformanceMain /assignment/input/student_data.csv /assignment/output/normal
+hadoop jar /assignment/CloudComputingAssignment-1.0-SNAPSHOT.jar org.cloudcomputing.StudentPerformanceMapReduce /assignment/input/student_data.csv /assignment/output/normal
 ```
 
 ### Run Table-Formatted Output Jobs:
 ```bash
-hadoop jar /assignment/CloudComputingAssignment-1.0-SNAPSHOT.jar org.cloudcomputing.StudentPerformanceDriver /assignment/input/student_data.csv /assignment/output/table
+hadoop jar /assignment/CloudComputingAssignment-1.0-SNAPSHOT.jar org.cloudcomputing.StudentPerformanceMapReduceWithPivot /assignment/input/student_data.csv /assignment/output/table
 ```
 
 ---
@@ -140,7 +151,7 @@ hadoop jar /assignment/CloudComputingAssignment-1.0-SNAPSHOT.jar org.cloudcomput
 
 ---
 
-## 📤 Step 7: View Results
+## 📤 Step 8: View Results
 
 ### 🔹 Normal Output:
 ```bash

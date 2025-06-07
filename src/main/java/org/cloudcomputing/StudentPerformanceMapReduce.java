@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.cloudcomputing.mapper.*;
 import org.cloudcomputing.reducer.GenericSumReducer;
 
-public class StudentPerformanceMain {
+public class StudentPerformanceMapReduce {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
@@ -25,7 +25,7 @@ public class StudentPerformanceMain {
         Configuration conf1 = new Configuration();
         Job job1 = Job.getInstance(conf1, "GPA Class Distribution by Gender and SchoolType");
 
-        job1.setJarByClass(StudentPerformanceMain.class);
+        job1.setJarByClass(StudentPerformanceMapReduce.class);
         job1.setMapperClass(GPAClassCountMapper.class);
         job1.setReducerClass(GenericSumReducer.class);
 
@@ -41,9 +41,9 @@ public class StudentPerformanceMain {
         Configuration conf2 = new Configuration();
         Job job2 = Job.getInstance(conf2, "Internet Access by SchoolType and Locale");
 
-        job2.setJarByClass(StudentPerformanceMain.class);
-        job2.setMapperClass(InternetAccessMapper.class); // updated mapper
-        job2.setReducerClass(GenericSumReducer.class); // still counts
+        job2.setJarByClass(StudentPerformanceMapReduce.class);
+        job2.setMapperClass(InternetAccessMapper.class);
+        job2.setReducerClass(GenericSumReducer.class);
 
         job2.setOutputKeyClass(Text.class);
         job2.setOutputValueClass(IntWritable.class);
@@ -58,7 +58,7 @@ public class StudentPerformanceMain {
         Configuration conf3 = new Configuration();
         Job job3 = Job.getInstance(conf3, "GPA Class by FreeTime and PartTimeJob");
 
-        job3.setJarByClass(StudentPerformanceMain.class);
+        job3.setJarByClass(StudentPerformanceMapReduce.class);
         job3.setMapperClass(FreeTimePartTimeGPAMapper.class);
         job3.setReducerClass(GenericSumReducer.class);
 
@@ -75,7 +75,7 @@ public class StudentPerformanceMain {
         Configuration conf4 = new Configuration();
         Job job4 = Job.getInstance(conf4, "GPA Class by Internet Access and Relationship");
 
-        job4.setJarByClass(StudentPerformanceMain.class);
+        job4.setJarByClass(StudentPerformanceMapReduce.class);
         job4.setMapperClass(InternetRelationshipGPAMapper.class);
         job4.setReducerClass(GenericSumReducer.class);
 

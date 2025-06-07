@@ -1,42 +1,55 @@
 package org.cloudcomputing.mapper;
 
 import java.io.IOException;
+
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.cloudcomputing.enums.FreeTime;
+import org.cloudcomputing.enums.GPACategory;
+import org.cloudcomputing.enums.PartTimeJob;
+import org.cloudcomputing.model.StudentRecord;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 public class FreeTimePartTimeGPAMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
-  private final Text outputKey = new Text();
-  private final static IntWritable one = new IntWritable(1);
+    private final Text outputKey = new Text();
+    private final static IntWritable one = new IntWritable(1);
 
-  public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-    String[] fields = value.toString().split(",");
-    // Skip header
-    if (fields[0].equals("Age")) return;
+    // Custom counter to track invalid or malformed records
+    enum CountersEnum {MALFORMED_RECORDS}
 
-    try {
-      int freeTime = Integer.parseInt(fields[19]);
-      String partTimeJobRaw = fields[16];
-      double gpa = Double.parseDouble(fields[11]);
+    private static final Log LOG = LogFactory.getLog(FreeTimePartTimeGPAMapper.class);
 
-      String freeTimeCategory = (freeTime <= 2) ? "LowFreeTime" : "HighFreeTime";
+    @Override
+    public void map(LongWritable key, Text value, Context context) {
+        try {
+            StudentRecord studentRecord = new StudentRecord(value);
+            int freeTime = studentRecord.freeTime;
+            boolean partTimeJobStatus = studentRecord.partTimeJob;
+            double gpa = studentRecord.gpa;
 
-      String partTimeJob = partTimeJobRaw.equalsIgnoreCase("1") ? "WithPartTimeJob" : "NoPartTimeJob";
+            // Categorize free time
+            FreeTime freeTimeCategory = FreeTime.fromFreeTime(freeTime);
 
-      String gpaCategory;
-      if (gpa > 3.7) {
-        gpaCategory = "FirstClass";
-      } else if (gpa > 3.5) {
-        gpaCategory = "SecondUpper";
-      } else if (gpa >= 3.0) {
-        gpaCategory = "SecondLower";
-      } else {
-        gpaCategory = "Normal";
-      }
+            // Categorize based on part-time job
+            PartTimeJob partTimeJobCategory = PartTimeJob.fromBoolean(partTimeJobStatus);
 
-      outputKey.set(freeTimeCategory + "_" + partTimeJob + "_" + gpaCategory);
-      context.write(outputKey, one);
-    } catch (Exception ignored) {}
-  }
+            // Categorize GPA into academic performance levels
+            GPACategory gpaCategory = GPACategory.fromGPA(gpa);
+
+            // Build the output key using the categories
+            outputKey.set(freeTimeCategory.name() + "_" + partTimeJobCategory.name() + "_" + gpaCategory.name());
+
+            // Emit the key with a count of 1 for each student record
+            context.write(outputKey, one);
+
+        } catch (Exception e) {
+            // If parsing fails, log the bad record and increment the malformed counter
+            LOG.warn("Skipping bad record: " + value);
+            context.getCounter(CountersEnum.MALFORMED_RECORDS).increment(1);
+        }
+    }
 }
