@@ -66,7 +66,7 @@ https://www.kaggle.com/datasets/neuralsorcerer/student-performance
 ```
 ~/downloads/
 └── Dasets/
-    ├── test.csv -> rename is as student_data.csv
+    ├── test.csv -> rename it as student_data.csv
 ```
 ---
 
